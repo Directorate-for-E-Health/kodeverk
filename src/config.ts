@@ -1,8 +1,9 @@
 //SNOMED CT CONFIGURATIONS
 //Using external Snowstorm due to CORS issues
-export let terminlogyServer: string = "https://seabreeze.conteir.no";
-export let branch: string = "MAIN/SNOMEDCT-NO-DAILYBUILD";
-export let refsetBranch: string = "MAIN/SNOMEDCT-NO-DAILYBUILD/REFSETS";
+export let terminlogyServer: string =
+  "https://snowstorm-db-prod.northeurope.cloudapp.azure.com";
+export let branch: string = "MAIN/SNOMEDCT-NO";
+export let refsetBranch: string = "MAIN/SNOMEDCT-NO/REFSETS";
 
 const semanticTags =
   "semanticTags=disorder&semanticTags=finding&semanticTags=body structure";
@@ -85,5 +86,4 @@ export const snomedCTBrowserURL =
 
 //Proxy url for FAT to avaid CORS issues
 
-export const fatProxyUrl =
-  "https://kodeverk.netlify.app/.netlify/functions/proxy";
+export const fatProxyUrl = "https://fat.terminologi.ehelse.no";
