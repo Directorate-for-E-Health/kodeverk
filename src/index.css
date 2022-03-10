@@ -1,0 +1,79 @@
+body {
+  margin: 0;
+  font-family: sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 120% !important;
+  line-height: 200% !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+article,
+header {
+  padding: 30px;
+  text-align: left;
+}
+article {
+  text-align: left;
+}
+article.line {
+  border-bottom-color: rgb(133, 133, 133);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+p {
+  line-height: 120% !important;
+}
+
+.alignLeft {
+  text-align: left;
+}
+ul.breadCrum,
+ul.navigation,
+ul.globalMenu {
+  list-style-type: none;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+ul.globalMenu {
+  float: right;
+}
+ul.globalMenu li {
+  color: white;
+  display: inline;
+  padding-right: 1.5em;
+}
+li.breadCrum {
+  vertical-align: middle;
+}
+li.breadCrum:last-child {
+  font-size: 200%;
+}
+.inline {
+  display: inline;
+}
+.harmonizer {
+  padding-top: 4px;
+}
+.resizer {
+  resize: horizontal;
+  overflow: auto;
+  border-right-color: black;
+  border-right-width: 1px;
+  border-right-style: dashed;
+}
+.tree {
+  font-size: 15px;
+  line-height: 150%;
+}
+
+/*EHELSE PROFIL*/
+
+header {
+  background-color: #0069e8;
+  color: white;
+}

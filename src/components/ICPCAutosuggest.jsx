@@ -1,0 +1,220 @@
+import React from "react";
+import Autosuggest from "react-autosuggest";
+import { snomedURLs, GETparams, snomedCTBrowserURL } from "../config.ts";
+import "../styles/DisordersAutosuggest.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Spinner } from "reactstrap";
+
+export default class ICPCAutosuggest extends React.Component {
+  constructor() {
+    super();
+
+    // Autosuggest is a controlled component.
+    // This means that you need to provide an input value
+    // and an onChange handler that updates this value (see below).
+    // Suggestions also need to be provided to the Autosuggest,
+    // and they are initially empty because the Autosuggest is closed.
+    this.state = {
+      showSpinner: false,
+      value: "",
+      suggestions: [],
+    };
+  }
+
+  fillIcpc2ForItem = (resultItem) => {
+    let codeICPCPromise = fetch(snomedURLs.icpc2Url + resultItem.conceptId) //browser-members to get ICPC-2
+      .then((response) => response.json())
+      .then((codeData) => {
+        if (
+          codeData &&
+          Array.isArray(codeData.items) &&
+          codeData.items.length > 0
+        ) {
+          if (codeData.items[0]?.additionalFields?.mapTarget !== undefined) {
+            //override existing code field:
+            resultItem.icpc2 =
+              codeData.items[0]?.additionalFields?.mapTarget || "0";
+          }
+        }
+      });
+    return codeICPCPromise;
+  };
+
+  // When suggestion is clicked, Autosuggest needs to populate the input
+  // based on the clicked suggestion. Teach Autosuggest how to calculate the
+  // input value for every given suggestion.
+  getSuggestionValue = (suggestion) => {
+    this.props.suggestCallback(suggestion);
+
+    return suggestion.term;
+  };
+
+  // Use your imagination to render suggestions.
+  renderSuggestion = (suggestion) => (
+    <div>
+      <strong>
+        {suggestion.term.charAt(0).toUpperCase() + suggestion.term.slice(1)}
+      </strong>
+      <br />
+      {"  SCTID "}
+      <a
+        href={snomedCTBrowserURL + suggestion.conceptId}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {suggestion.conceptId}
+      </a>{" "}
+      <i className="fa fa-external-link"></i> {" | ICPC-2: "}
+      <a
+        href={"codeView?codeSystem=icpc2&code=" + suggestion.icpc2}
+        rel="noopener noreferrer"
+      >
+        {suggestion.icpc2}
+      </a>
+    </div>
+  );
+
+  // Autosuggest will call this function every time you need to update suggestions.
+  // You already implemented this logic above, so just use it.
+  onSuggestionsFetchRequested = ({ value }) => {
+    const inputValue = value.trim().toLowerCase();
+    this.setState({ showSpinner: true });
+
+    let promises = [];
+    let suggestions = [];
+
+    //snomedURLs.getTerms = URLaddress; value = a term from users input
+    if (inputValue && inputValue.length >= 3) {
+      // First request to Snomed: search by term
+      let snomedCTPromise = fetch(snomedURLs.getByTerms + value, GETparams)
+        .then((response) => response.json())
+        .then((data) => {
+          // check if input is still the same after fetch (fetch takes time)
+          if (
+            this.state.value.trim().toLowerCase() === inputValue &&
+            data?.items?.length > 0
+          ) {
+            let resultItems = []; // for suggestions
+            let codePromises = []; // promises with code system
+
+            data.items.forEach((item) => {
+              resultItems.push({
+                term: item.term,
+                conceptId: item.concept.conceptId,
+                icpc2: "-",
+              });
+            });
+
+            resultItems.forEach((resultItem) => {
+              //ICPC-2
+              codePromises.push(this.fillIcpc2ForItem(resultItem));
+            });
+
+            return Promise.all(codePromises).then(() => {
+              let finalResult = [];
+              resultItems.forEach((resItem) => {
+                if (resItem.icpc2 !== "-") finalResult.push(resItem);
+              });
+
+              suggestions = suggestions.concat(finalResult);
+            }); //(!)
+          }
+        });
+      promises.push(snomedCTPromise);
+
+      // Or search description to render by a code in mapTarget:
+      let mapTargetIcpc2Promise = fetch(
+        snomedURLs.getByMapTargetIcpc2 + value.toUpperCase(),
+        GETparams
+      ) //members to get term, conceptId
+        .then((response) => response.json())
+        .then((data) => {
+          let resultItems = [];
+          let codePromises = [];
+
+          data.items.forEach((item) => {
+            // suggestion's data
+            resultItems.push({
+              term: item.referencedComponent.pt.term,
+              conceptId: item.referencedComponent.conceptId,
+              icpc2: data.items[0]?.additionalFields?.mapTarget,
+            });
+          });
+
+          suggestions = suggestions.concat(resultItems);
+
+          return Promise.all(codePromises);
+        });
+      promises.push(mapTargetIcpc2Promise);
+
+      Promise.all(promises).then(() => {
+        if (this.state.value.trim().toLowerCase() === inputValue) {
+          // set filled items as suggestions
+          this.setState({
+            suggestions: suggestions,
+            showSpinner: false,
+          });
+        }
+      });
+    } else {
+      this.setState({
+        suggestions: [],
+      });
+    }
+  };
+
+  // Autosuggest will call this function every time you need to clear suggestions.
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    });
+  };
+
+  onChange = (event, { newValue }) => {
+    //this.props.clearCallback();
+    this.setState({
+      value: newValue,
+    });
+  };
+
+  render() {
+    const { value, suggestions } = this.state;
+
+    // Autosuggest will pass through all these props to the input.
+    const inputProps = {
+      value,
+      onChange: this.onChange,
+      placeholder: this.props.placeholder,
+    };
+
+    // Finally, render it!
+    return (
+      <div>
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={this.getSuggestionValue}
+          renderSuggestion={this.renderSuggestion}
+          inputProps={inputProps}
+        />
+        {this.state.showSpinner ? <Spinner color="success" /> : null}
+
+        {/*<button onClick={() => {
+                let last = 'Depressed';
+                if(last) {
+                    // Sets input value
+                    this.onChange(null, {newValue: last});
+                                  
+                    // Fetches suggestions
+                    this.onSuggestionsFetchRequested({value: last});
+
+                    // Focus input to show suggestions list
+                    let elements = document.getElementsByClassName('react-autosuggest__input');
+                    elements[0].focus();
+                }
+               }}>get last</button>*/}
+      </div>
+    );
+  }
+}
