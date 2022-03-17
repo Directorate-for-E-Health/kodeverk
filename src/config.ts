@@ -46,6 +46,16 @@ export const snomedURLs = {
     "&referenceSet=447562003" +
     "&referencedComponentId=",
 
+  icd10NorwegianUrl:
+    terminlogyServer +
+    "/browser/" +
+    refsetBranch +
+    "/members" +
+    urlParameters +
+    "&referenceSet=447562003" +
+    "&module=51000202101" +
+    "&referencedComponentId=",
+
   icpc2Url:
     terminlogyServer +
     "/browser/" +

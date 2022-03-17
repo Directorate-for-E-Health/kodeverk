@@ -59,7 +59,9 @@ export default class ICDAutosuggest extends React.Component {
     );
 
   fillIcd10ForItem = (resultItem) => {
-    let codeICDPromise = fetch(snomedURLs.icd10Url + resultItem.conceptId) //browser-members to get ICD-10
+    let codeICDPromise = fetch(
+      snomedURLs.icd10NorwegianUrl + resultItem.conceptId
+    )
       .then((response) => response.json())
       .then((codeData) => {
         if (

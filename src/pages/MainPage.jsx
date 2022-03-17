@@ -53,7 +53,7 @@ export const MainPage = class MainPage extends React.Component {
                   <a href="/icpcsearch">ICPC-2 &gt;&gt;</a>
                 </li>
                 <li>
-                  <a href="/">NKPK</a>
+                  <a href="/nkpksearch">NKPK &gt;&gt;</a>
                 </li>
               </ul>
             </div>

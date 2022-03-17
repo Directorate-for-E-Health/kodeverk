@@ -46,7 +46,7 @@ export const ICDsearch = class ICDsearch extends React.Component {
             </div>
           </div>
         </article>
-        <article>
+        <article className="line">
           <div className="row gx-5">
             <div className="col-sm-8 col-sm-offset-1">
               <Tree content="ICD-10" open style={treeStyles}>
@@ -85,6 +85,52 @@ export const ICDsearch = class ICDsearch extends React.Component {
                 </a>
                 &nbsp;
                 <i className="fa fa-external-link"> </i>
+              </p>
+            </div>
+          </div>
+        </article>
+        <article>
+          <div className="row">
+            <div className="col-md-8">
+              <h2>Kodeverket ICD-10 (og ICD-11)</h2>
+              <p>
+                I Norge benytter vi i dag den 10. versjonen av ICD-kodeverket –
+                ICD-10. ICD-10 brukes til koding av dødsårsaker. I
+                spesialisthelsetjenesten brukes ICD-10 til å rapportere
+                diagnoser og kontaktårsaker til Norsk pasientregister. Kodene
+                brukes også i helseregistre og i nasjonale kvalitetsindikatorer.
+              </p>
+              <p>
+                Det er Verdens helseorganisasjon (WHO) som eier og publiserer
+                ICD-kodeverket. Alle WHOs medlemsland skal benytte seg av dette
+                kodeverket til statistikk for sykdommer og dødsårsaker.
+                Hensikten med et internasjonalt kodeverk er å kunne sammenligne
+                helsedata over landegrensene. Flere medlemsland har likevel
+                behov for å tilpasse kodeverket på enkelte områder, dette
+                gjelder også Norge. I Norge er det Direktoratet for e-helse som
+                drifter, vedlikeholder og utvikler ICD-kodeverket.
+              </p>
+              <p>
+                Verdens helseforsamling i WHO godkjente ICD-11 i 2019. Denne
+                første internasjonale versjonen av ICD-11 er laget for at
+                medlemslandene skal starte planlegging av overgangen fra ICD-10
+                til ICD-11. Norge er i startfasen av strategiplanleggingen for
+                dette arbeidet, og det er et omfattende arbeid og mange aktører
+                som skal involveres. Endringene fra ICD-10 er svært omfattende
+                og vi forventer at det vil ta mange år å innføre og iverksette
+                ICD-11. Til sammenlikning tok overgangen fra ICD-9 til ICD-10 i
+                Norge mellom fem og syv år.
+              </p>
+              <p>
+                Direktoratet for e-helse er i dialog med andre nordiske land om
+                innføring av ICD-11. Siden dødsårsaker rapporteres
+                internasjonalt, er det forventet at dette vil være det første
+                området som tar i bruk ICD-11 i Norge.
+              </p>
+              <p>
+                <a href="https://icd.who.int/en">
+                  Du kan lese mer om ICD-11 på WHO sine nettsider.
+                </a>
               </p>
             </div>
           </div>
