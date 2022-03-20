@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../index.css";
-import ICPCAutosuggest from "../components/ICPCAutosuggest";
+import NKPKAutosuggest from "../components/NKPKAutosuggest";
 import Header from "../components/Header";
 import Tree from "react-animated-tree";
 
@@ -34,10 +34,10 @@ export const NKPKsearch = class NKPKsearch extends React.Component {
           </ul>
         </article>
         <article>
-          <h1>Under arbeid</h1>
+          <h1>Viser bare for NCMP...</h1>
           <div className="row justify-content-md-center">
             <div className="col-9">
-              <ICPCAutosuggest
+              <NKPKAutosuggest
                 suggestCallback={this.suggestCallback}
                 codeSystem={"SNOMED-CT"}
                 placeholder="Søk med term eller kode i NKPK-kodeverket"
@@ -48,17 +48,17 @@ export const NKPKsearch = class NKPKsearch extends React.Component {
         <article>
           <div className="row gx-5">
             <div className="col-sm-8 col-sm-offset-1">
-              <Tree content="ICPC-2" open style={treeStyles}>
-                <Tree content="A Allment og uspesifisert" />
-                <Tree content="B Blod, bloddannende organer og immunsystemet">
-                  <Tree content="Symptomer og plager" />
-                  <Tree content="Diagnoser/sykdommer">
-                    <Tree content="B70 Lymfadenitt akutt" />
-                    <Tree content="B71 Lymfadenitt kronisk/uspesifik"></Tree>
+              <Tree content="NKPK" open style={treeStyles}>
+                <Tree content="Kapittel A Nervesystemet" />
+                <Tree content="Kapittel B Endokrine organer">
+                  <Tree content="BA Tyreoidea" />
+                  <Tree content="BB Paratyreoidea">
+                    <Tree content="BBA Paratyreoidea" />
+                    <Tree content="BBX Mindre prosedyrer på paratyreoidea"></Tree>
                   </Tree>
                 </Tree>
-                <Tree content="D Fordøyelsessystemet" />
-                <Tree content="F Øye" />
+                <Tree content="Kapittel C Øyet og øyeregionen" />
+                <Tree content="F ØyeCA OrbitaKapittel D Øre, nese, bihuler og strupehode" />
               </Tree>
             </div>
             <div className="col-sm-4 bg-light">

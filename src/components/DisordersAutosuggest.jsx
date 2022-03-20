@@ -84,6 +84,19 @@ export default class DisordersAutosuggest extends React.Component {
       ) : (
         ""
       )}
+      {suggestion.nkpk && suggestion.nkpk !== undefined ? (
+        <>
+          {" | NKPK: "}
+          <a
+            href={"codeView?codeSystem=NKPK&code=" + suggestion.nkpk}
+            rel="noopener noreferrer"
+          >
+            {suggestion.nkpk}
+          </a>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 
@@ -147,6 +160,27 @@ export default class DisordersAutosuggest extends React.Component {
     return codeLocationPromise;
   };
 
+  fillNkpkForItem = (resultItem) => {
+    let codeNkpkPromise = fetch(snomedURLs.NKPKUrl + resultItem.conceptId) //browser-members to get NKPK
+      .then((response) => response.json())
+      .then((codeData) => {
+        if (
+          codeData &&
+          Array.isArray(codeData.items) &&
+          codeData.items.length > 0
+        ) {
+          if (
+            codeData.items[0].additionalFields.mapTarget &&
+            codeData.items[0]?.additionalFields?.mapTarget !== undefined
+          ) {
+            //override existing code field:
+            resultItem.nkpk = codeData.items[0].additionalFields.mapTarget;
+          }
+        }
+      });
+    return codeNkpkPromise;
+  };
+
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
@@ -185,8 +219,10 @@ export default class DisordersAutosuggest extends React.Component {
               codePromises.push(this.fillIcd10ForItem(resultItem));
               //ICPC-2
               codePromises.push(this.fillIcpc2ForItem(resultItem));
-              //ICPC-2
+              //Location
               codePromises.push(this.fillLocationForItem(resultItem));
+              //NKPK
+              codePromises.push(this.fillNkpkForItem(resultItem));
             });
             suggestions = suggestions.concat(resultItems);
 

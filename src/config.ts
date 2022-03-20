@@ -6,10 +6,10 @@ export let branch: string = "MAIN/SNOMEDCT-NO";
 export let refsetBranch: string = "MAIN/SNOMEDCT-NO/REFSETS";
 
 const semanticTags =
-  "semanticTags=disorder&semanticTags=finding&semanticTags=body structure";
+  "semanticTags=disorder&semanticTags=finding&semanticTags=body structure&semanticTags=procedure";
 
 export let urlParameters: string =
-  "?limit=10&active=true&groupByConcept=true&" +
+  "?limit=100&active=true&groupByConcept=true&" +
   semanticTags +
   "&language=no&language=nb&language=nn&language=en&conceptActive=true";
 
@@ -35,6 +35,12 @@ export const snomedURLs = {
     "/" +
     refsetBranch +
     "/members?&referenceSet=68101000202102&active=true&mapTarget=",
+
+  getByMapTargetNkpk:
+    terminlogyServer +
+    "/" +
+    refsetBranch +
+    "/members?&referenceSet=37761000202105&active=true&mapTarget=",
 
   //browser-members to get a code system
   icd10Url:
@@ -65,7 +71,6 @@ export const snomedURLs = {
     "&referenceSet=68101000202102" +
     "&referencedComponentId=",
 
-  //TODO: branch, refset ?
   anatomicalLocalisationUrl:
     terminlogyServer +
     "/browser/" +
@@ -73,6 +78,15 @@ export const snomedURLs = {
     "/members" +
     urlParameters +
     "&referenceSet=89811000202103" +
+    "&referencedComponentId=",
+
+  NKPKUrl:
+    terminlogyServer +
+    "/browser/" +
+    refsetBranch +
+    "/members" +
+    urlParameters +
+    "&referenceSet=37761000202105" +
     "&referencedComponentId=",
 };
 
