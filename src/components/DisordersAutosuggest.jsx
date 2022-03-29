@@ -1,6 +1,11 @@
 import React from "react";
 import Autosuggest from "react-autosuggest";
-import { snomedURLs, GETparams, snomedCTBrowserURL } from "../config.ts";
+import {
+  snomedURLs,
+  GETparams,
+  snomedCTBrowserURL,
+  fatProxyUrl,
+} from "../config.ts";
 import "../styles/DisordersAutosuggest.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "reactstrap";
@@ -100,6 +105,62 @@ export default class DisordersAutosuggest extends React.Component {
     </div>
   );
 
+  // ! First, request for norsk members;
+  // ! We need to get and to check value from mapTarget (code for codeSystem);
+  // ! Then we send request to fatData to get to know
+  //!...if this code (mapTarget) is valid for search.
+  // ! If exists, just return suggestion with the code,
+  //!...if no, we send new request to international members
+  fillIcd10ForItemNorsk = (resultItem) => {
+    console.log("resultItem in fillIcd10ForItemNorsk", resultItem);
+    let codeICDNorskPromise = fetch(
+      snomedURLs.icd10NorwegianUrl + resultItem.conceptId
+    ) //browser-members to get ICD-10
+      .then((response) => response.json())
+      .then((codeData) => {
+        if (
+          codeData &&
+          Array.isArray(codeData.items) &&
+          codeData.items.length > 0
+        ) {
+          if (codeData.items[0]?.additionalFields?.mapTarget !== undefined) {
+            //override existing codeSystem-field:
+            resultItem.icd10 =
+              codeData.items[0]?.additionalFields?.mapTarget || undefined;
+
+            // fetch for data (check if valid for norsk)
+            let possibleDataPromise = fetch(
+              fatProxyUrl + "/api/code-systems/icd10/" + resultItem.icd10,
+              {
+                method: "GET",
+                headers: {
+                  Accept: "text/plain",
+                },
+              }
+            )
+              .then((response) => response.json())
+              .then((response) => {
+                if (response.status === 404) {
+                  console.log(
+                    "no data, fetching international for " + resultItem.icd10
+                  );
+                  return this.fillIcd10ForItem(resultItem);
+                } else
+                  console.log(
+                    "have data for " + resultItem.icd10 + ", do nothing"
+                  );
+              });
+
+            return possibleDataPromise;
+            // fetch for data
+            // if no data do request for international
+            // return promise!
+          }
+        }
+      });
+    return codeICDNorskPromise; // return any mapTarget for ICD if exists
+  };
+
   fillIcd10ForItem = (resultItem) => {
     let codeICDPromise = fetch(snomedURLs.icd10Url + resultItem.conceptId) //browser-members to get ICD-10
       .then((response) => response.json())
@@ -116,7 +177,7 @@ export default class DisordersAutosuggest extends React.Component {
           }
         }
       });
-    return codeICDPromise;
+    return codeICDPromise; // return any mapTarget for ICD if exists
   };
 
   fillIcpc2ForItem = (resultItem) => {
@@ -137,7 +198,8 @@ export default class DisordersAutosuggest extends React.Component {
       });
     return codeICPCPromise;
   };
-  fillLocationForItem = (resultItem) => {
+
+  /* fillLocationForItem = (resultItem) => {
     let codeLocationPromise = fetch(
       snomedURLs.anatomicalLocalisationUrl + resultItem.conceptId
     ) //browser-members to get ICPC-2
@@ -158,7 +220,7 @@ export default class DisordersAutosuggest extends React.Component {
         }
       });
     return codeLocationPromise;
-  };
+  };*/
 
   fillNkpkForItem = (resultItem) => {
     let codeNkpkPromise = fetch(snomedURLs.NKPKUrl + resultItem.conceptId) //browser-members to get NKPK
@@ -191,6 +253,15 @@ export default class DisordersAutosuggest extends React.Component {
     let suggestions = [];
 
     if (inputValue && inputValue.length >= 3) {
+      // ! For Main Page we have 2 options how to get suggestions from our search:
+      // ! 1. By term (english; norwegian refset, international refset);
+      // ! 2. By code (includes ICPC-2, ICD-10, location in a body);
+
+      // ! When making search by term, we need to check,
+      //!...if returned data contains appropriate mapTarget (code for codeSystem)
+      //!...which we can use for the next request
+
+      // ! 1)
       // Search descriptions to render by term:
       let snomedCTPromise = fetch(snomedURLs.getByTerms + value, GETparams) //browser-descriptions to get term, id
         .then((response) => response.json())
@@ -204,7 +275,7 @@ export default class DisordersAutosuggest extends React.Component {
             let codePromises = [];
 
             data.items.forEach((item) => {
-              // suggestion's data:
+              // suggestion's data with term and SCTID:
               resultItems.push({
                 term: item.term,
                 conceptId: item.concept.conceptId,
@@ -214,16 +285,34 @@ export default class DisordersAutosuggest extends React.Component {
               });
             });
 
+            // ! Now for each suggestion we have to find and a code system and appropriate code.
+            // !
             resultItems.forEach((resultItem) => {
+              codePromises.push(this.fillIcd10ForItemNorsk(resultItem)); // all mapTargets
               //ICD-10
-              codePromises.push(this.fillIcd10ForItem(resultItem));
+              codePromises.push(this.fillIcd10ForItem(resultItem)); // all mapTargets
               //ICPC-2
               codePromises.push(this.fillIcpc2ForItem(resultItem));
               //Location
-              codePromises.push(this.fillLocationForItem(resultItem));
+              //   codePromises.push(this.fillLocationForItem(resultItem));
               //NKPK
               codePromises.push(this.fillNkpkForItem(resultItem));
             });
+            // // ??????
+            // resultItems.forEach((resIt) => {
+            //   let finalMapTarget = resIt.icd10;
+            //   if (
+            //       fetch(snomedURLs.getByMapTargetIcd10+finalMapTarget, GETparams)
+            //         .then((response) => response.json())
+            //         .then((data) => {
+            //           console.log("this data:", data)
+            //         })
+            //     )
+            //     {
+            //       console.log("text");
+            //     }
+            // })
+
             suggestions = suggestions.concat(resultItems);
 
             return Promise.all(codePromises); //(!)
@@ -232,6 +321,7 @@ export default class DisordersAutosuggest extends React.Component {
       promises.push(snomedCTPromise);
 
       // Or search description to render by a code in mapTarget:
+      // Collect ICD codes
       let mapTargetIcd10Promise = fetch(
         snomedURLs.getByMapTargetIcd10 + value.toUpperCase(),
         GETparams
@@ -251,7 +341,6 @@ export default class DisordersAutosuggest extends React.Component {
           });
 
           resultItems.forEach((item) => {
-            // Get missing ICPC-2, if present
             codePromises.push(this.fillIcpc2ForItem(item));
           });
 
@@ -261,6 +350,35 @@ export default class DisordersAutosuggest extends React.Component {
         });
       promises.push(mapTargetIcd10Promise);
 
+      let mapTargetIcd10NorwegianPromise = fetch(
+        snomedURLs.getByMapTargetNorwegianIcd10 + value,
+        GETparams
+      ) //members to get term, conceptId
+        .then((response) => response.json())
+        .then((data) => {
+          let resultItems = [];
+          let codePromises = [];
+
+          data.items.forEach((item) => {
+            // suggestion's data
+            resultItems.push({
+              term: item.referencedComponent.pt.term,
+              conceptId: item.referencedComponent.conceptId,
+              icd10: data.items[0]?.additionalFields?.mapTarget,
+            });
+          });
+
+          resultItems.forEach((item) => {
+            codePromises.push(this.fillIcpc2ForItem(item));
+          });
+
+          suggestions = suggestions.concat(resultItems);
+
+          return Promise.all(codePromises);
+        });
+      promises.push(mapTargetIcd10NorwegianPromise);
+
+      // Collects ICPC codes
       let mapTargetIcpc2Promise = fetch(
         snomedURLs.getByMapTargetIcpc2 + value.toUpperCase(),
         GETparams

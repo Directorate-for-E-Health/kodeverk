@@ -8,9 +8,24 @@ export let refsetBranch: string = "MAIN/SNOMEDCT-NO/REFSETS";
 const semanticTags =
   "semanticTags=disorder&semanticTags=finding&semanticTags=body structure&semanticTags=procedure";
 
+const semanticTagsFindings =
+  "semanticTags=disorder&semanticTags=finding&semanticTags=situation&semanticTags=event";
+
+const semanticTagsProcedures = "semanticTags=disorder&semanticTags=procedure";
+
 export let urlParameters: string =
-  "?limit=100&active=true&groupByConcept=true&" +
+  "?limit=10&active=true&groupByConcept=true&" +
   semanticTags +
+  "&language=no&language=nb&language=nn&language=en&conceptActive=true";
+
+export let urlParametersFindings: string =
+  "?limit=10&active=true&groupByConcept=true&" +
+  semanticTagsFindings +
+  "&language=no&language=nb&language=nn&language=en&conceptActive=true";
+
+export let urlParametersProcedures: string =
+  "?limit=10&active=true&groupByConcept=true&" +
+  semanticTagsProcedures +
   "&language=no&language=nb&language=nn&language=en&conceptActive=true";
 
 export const snomedURLs = {
@@ -29,6 +44,11 @@ export const snomedURLs = {
     "/" +
     branch +
     "/members?&referenceSet=447562003&active=true&mapTarget=",
+  getByMapTargetNorwegianIcd10:
+    terminlogyServer +
+    "/" +
+    refsetBranch +
+    "/members?&referenceSet=447562003&module=51000202101&active=true&mapTarget=",
 
   getByMapTargetIcpc2:
     terminlogyServer +
@@ -46,9 +66,9 @@ export const snomedURLs = {
   icd10Url:
     terminlogyServer +
     "/browser/" +
-    branch +
+    refsetBranch +
     "/members" +
-    urlParameters +
+    urlParametersFindings +
     "&referenceSet=447562003" +
     "&referencedComponentId=",
 
@@ -57,7 +77,7 @@ export const snomedURLs = {
     "/browser/" +
     refsetBranch +
     "/members" +
-    urlParameters +
+    urlParametersFindings +
     "&referenceSet=447562003" +
     "&module=51000202101" +
     "&referencedComponentId=",
@@ -67,7 +87,7 @@ export const snomedURLs = {
     "/browser/" +
     refsetBranch +
     "/members" +
-    urlParameters +
+    urlParametersFindings +
     "&referenceSet=68101000202102" +
     "&referencedComponentId=",
 
@@ -85,8 +105,8 @@ export const snomedURLs = {
     "/browser/" +
     refsetBranch +
     "/members" +
-    urlParameters +
-    "&referenceSet=37761000202105" +
+    urlParametersProcedures +
+    "&referenceSet=37821000202109" +
     "&referencedComponentId=",
 };
 
@@ -97,13 +117,13 @@ export const GETparams = {
   },
 };
 
-const version = "2022-02-04";
+//const version = "2022-02-04";
 const languages = "no,en";
 
 //Using external browser for best performance in prototype
 export const snomedCTBrowserURL =
-  "https://browser.conteir.no/?perspective=full&edition=MAIN/SNOMEDCT-NO-DAILYBUILD/" +
-  version +
+  "https://dailybuild.ihtsdotools.org/?perspective=full&edition=MAIN/SNOMEDCT-NO" +
+  //  version +
   "&release=&languages=" +
   languages +
   "&conceptId1=";

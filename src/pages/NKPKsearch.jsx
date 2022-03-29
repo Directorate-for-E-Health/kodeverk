@@ -34,7 +34,6 @@ export const NKPKsearch = class NKPKsearch extends React.Component {
           </ul>
         </article>
         <article>
-          <h1>Viser bare for NCMP...</h1>
           <div className="row justify-content-md-center">
             <div className="col-9">
               <NKPKAutosuggest
