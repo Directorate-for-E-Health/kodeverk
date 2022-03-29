@@ -50,6 +50,9 @@ export const MainPage = class MainPage extends React.Component {
                   <a href="/icdsearch">ICD-10 &gt;&gt;</a>
                 </li>
                 <li>
+                  <a href="/icdsearchfat">ICD-10 FAT&gt;&gt;</a>
+                </li>
+                <li>
                   <a href="/icpcsearch">ICPC-2 &gt;&gt;</a>
                 </li>
                 <li>

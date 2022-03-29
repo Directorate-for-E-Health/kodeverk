@@ -5,6 +5,7 @@ import CodeView from "./pages/CodeView";
 import ICDsearch from "./pages/ICDsearch";
 import ICPCsearch from "./pages/ICPCsearch";
 import NKPKsearch from "./pages/NKPKsearch";
+import ICDsearchFat from "./pages/ICDsearchFat";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/icdsearch" exact element={<ICDsearch />} />
           <Route path="/icpcsearch" exact element={<ICPCsearch />} />
           <Route path="/nkpksearch" exact element={<NKPKsearch />} />
+          <Route path="/icdsearchfat" exact element={<ICDsearchFat />} />
         </Routes>
       </Router>
     </div>
