@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../index.css";
-//import ICDAutosuggestFat from "../components/ICDAutosuggestFat";
+import ICDAutosuggestFat from "../components/ICDAutosuggestFat";
 import Header from "../components/Header";
 import Tree from "react-animated-tree";
 
@@ -10,10 +10,15 @@ export const ICDsearchFat = class ICDsearchFat extends React.Component {
     super(props);
     this.state = {
       showSpinner: false,
-      codeSystem: "",
       suggestion: {},
     };
   }
+
+  suggestCallback = (suggestion) => {
+    console.log("suggestion", suggestion);
+    if (!suggestion) return;
+    this.setState({ suggestion: suggestion });
+  };
 
   render() {
     const treeStyles = {};
@@ -27,22 +32,15 @@ export const ICDsearchFat = class ICDsearchFat extends React.Component {
             <li className="inline">
               <a href="/">Forside</a> &gt;
             </li>
-            <li className="inline breadCrum"> ICD-10 fra FAT</li>
+            <li className="inline breadCrum"> ICD-10 - FAT style</li>
           </ul>
         </article>
         <article>
-          <p>Her kommer ICD-10-søk basert på Elastic-instalasjon i FAT</p>
+          <ICDAutosuggestFat
+            suggestCallback={this.suggestCallback}
+            placeholder="Fritekst eller ICD-10-kode"
+          />
         </article>
-        {/* <article>
-          <div className="row justify-content-md-center">
-            <div className="col-9">
-              <ICDAutosuggestFat
-                suggestCallback={this.suggestCallback}
-                placeholder="Søk med term eller kode i ICD-10-kodeverket"
-              />
-            </div>
-          </div>
-       </article>*/}
         <article className="line">
           <div className="row gx-5">
             <div className="col-sm-8 col-sm-offset-1">
@@ -60,10 +58,7 @@ export const ICDsearchFat = class ICDsearchFat extends React.Component {
                   <Tree content="(C30-C39) Ondartede svulster i åndedrettsorganer og intratorakale organer" />
                 </Tree>
                 <Tree content="Kapittel III (D50-D89) Sykdommer i blod og bloddannende organer og visse tilstander som angår immunsystemet" />
-                <Tree
-                  content="Kapittel IV (E00-E90) Endokrine sykdommer, ernæringssykdommer og metabolske forstyrrelser
-"
-                />
+                <Tree content="Kapittel IV (E00-E90) Endokrine sykdommer, ernæringssykdommer og metabolske forstyrrelser" />
               </Tree>
             </div>
             <div className="col-sm-4 bg-light">

@@ -14,10 +14,7 @@ function Navbar() {
         <li>ICPC-2</li>
       </Link>
       <Link to="/NKPKsearch">
-        <li>NKNP</li>
-      </Link>
-      <Link to="">
-        <li>Kodeverk i standarder</li>
+        <li>NKPK</li>
       </Link>
     </ul>
   );

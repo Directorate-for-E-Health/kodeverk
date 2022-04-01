@@ -25,6 +25,30 @@ export const MainPage = class MainPage extends React.Component {
       <div>
         <Header />
         <article>
+          <div
+            class="row"
+            style={{
+              backgroundColor: "red",
+              marginLeft: "-40px",
+              marginRight: "-40px",
+            }}
+          >
+            <div class="col-md-12">
+              <div className="breakingNews">
+                <p>
+                  {" "}
+                  <a href="/icdsearchfat">
+                    <strong>Akkurat nå:</strong> &nbsp; Søk direkte i ICD-10!!!!
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ICD-10 er gjort tilgjengelig
+                    i FAT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dataene lastes inn i
+                    Elastic fra HealthTerm.
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article>
           <ul className="breadCrum breadCrum">
             <li className="breadCrum">Forside</li>
           </ul>
