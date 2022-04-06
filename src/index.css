@@ -94,12 +94,18 @@ To be very removed*/
     transform: translate(-100%, 0);
   }
 }
+
 .breakingNews p a {
-  text-decoration: none;
+  text-decoration: underline;
   color: white;
 }
 .breakingNews p a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+}
+
+.breakingNews {
+  height: 70px;
+  overflow: visible;
 }
 
 /*EHELSE PROFIL*/

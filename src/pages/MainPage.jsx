@@ -37,12 +37,13 @@ export const MainPage = class MainPage extends React.Component {
               <div className="breakingNews">
                 <p>
                   {" "}
-                  <a href="/icdsearchfat">
-                    <strong>Akkurat nå:</strong> &nbsp; Søk direkte i ICD-10!!!!
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ICD-10 er gjort tilgjengelig
-                    i FAT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dataene lastes inn i
-                    Elastic fra HealthTerm.
-                  </a>
+                  <strong>Akkurat nå:</strong> &nbsp; Søk direkte i{" "}
+                  <a href="/icdsearchfat">ICD-10</a>,{" "}
+                  <a href="/icpcsearchfat">ICPC-2</a> og
+                  <a href="/nkpksearchfat"> NKPK</a> !!!!
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kodeverkene er gjort
+                  tilgjengelig i FAT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dataene
+                  lastes inn i Elastic fra HealthTerm.{"             "}
                 </p>
               </div>
             </div>
@@ -80,7 +81,13 @@ export const MainPage = class MainPage extends React.Component {
                   <a href="/icpcsearch">ICPC-2 &gt;&gt;</a>
                 </li>
                 <li>
+                  <a href="/icpcsearchfat">ICPC-2 FAT&gt;&gt;</a>
+                </li>
+                <li>
                   <a href="/nkpksearch">NKPK &gt;&gt;</a>
+                </li>
+                <li>
+                  <a href="/nkpksearchfat">NKPK FAT&gt;&gt;</a>
                 </li>
               </ul>
             </div>
