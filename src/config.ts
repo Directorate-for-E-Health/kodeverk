@@ -1,7 +1,9 @@
 //SNOMED CT CONFIGURATIONS
 //Using external Snowstorm due to CORS issues
+//export let terminlogyServer: string =
+// "https://snowstorm-db-prod.northeurope.cloudapp.azure.com";
 export let terminlogyServer: string =
-  "https://snowstorm-db-prod.northeurope.cloudapp.azure.com";
+  "https://dailybuild.terminologi.ehelse.no/snowstorm/snomed-ct";
 export let branch: string = "MAIN/SNOMEDCT-NO";
 export let refsetBranch: string = "MAIN/SNOMEDCT-NO/REFSETS";
 
