@@ -1,6 +1,26 @@
+@font-face {
+  font-family: GraphikBold;
+  src: url("../src/fonts/GraphikBold.otf") format("truetype");
+}
+@font-face {
+  font-family: GraphikSemiBold;
+  src: url("../src/fonts/GraphikSemibold.otf");
+}
+@font-face {
+  font-family: GraphikMedium;
+  src: url("../src/fonts/GraphikMedium.otf");
+}
+@font-face {
+  font-family: GraphikRegular;
+  src: url("../src/fonts/GraphikRegular.otf");
+}
+@font-face {
+  font-family: GraphikLight;
+  src: url("../src/fonts/GraphikLight.otf");
+}
 body {
   margin: 0;
-  font-family: sans-serif !important;
+  font-family: GraphikRegular !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 120% !important;
