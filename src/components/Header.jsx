@@ -6,17 +6,16 @@ import "../index.css";
 export const Header = class Header extends React.Component {
   render() {
     return (
-      <header className="jumbotron text-left">
+      <header>
         <Navbar />
         <a href="/">
           <img
             className="alignLeft"
-            src="assets/ehelse_logo_white.png"
+            src="assets/ehelse_logo.png"
             alt="Logo e-helse"
-            height="150px"
+            width="132px"
           ></img>
         </a>
-        <h1>Kodeverk</h1>
       </header>
     );
   }

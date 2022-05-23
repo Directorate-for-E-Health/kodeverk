@@ -5,16 +5,7 @@ function Navbar() {
   return (
     <ul className="globalMenu">
       <Link to="/">
-        <li>Forside</li>
-      </Link>
-      <Link to="/icdsearch">
-        <li>ICD-10</li>
-      </Link>
-      <Link to="/icpcsearch">
-        <li>ICPC-2</li>
-      </Link>
-      <Link to="/NKPKsearch">
-        <li>NKPK</li>
+        <li>Meny</li>
       </Link>
     </ul>
   );

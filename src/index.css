@@ -34,11 +34,12 @@ code {
 
 article,
 header {
-  padding: 30px;
   text-align: left;
+  padding: 30px;
 }
 article {
   text-align: left;
+  padding: 30px;
 }
 article.line {
   border-bottom-color: rgb(133, 133, 133);
@@ -46,11 +47,16 @@ article.line {
   border-bottom-width: 1px;
 }
 p {
-  line-height: 120% !important;
+  line-height: 30px !important;
+  font-size: 17px !important;
+  font-weight: normal !important;
 }
 
 .alignLeft {
   text-align: left;
+}
+.marginRight {
+  margin-right: 10px;
 }
 ul.breadCrum,
 ul.navigation,
@@ -72,6 +78,9 @@ li.breadCrum {
 }
 li.breadCrum:last-child {
   font-size: 200%;
+}
+label {
+  display: block !important;
 }
 .inline {
   display: inline;
@@ -131,5 +140,61 @@ To be very removed*/
 
 header {
   background-color: #0069e8;
+
   color: white;
+}
+.cp-listItem {
+  min-height: 40px;
+  border-top: 2px solid #efefef;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.cp-listItem_arrowWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 70px;
+  align-items: flex-end;
+}
+.cp-imageAndText__centerWrapper--borderBottom {
+  padding-top: 100px;
+  padding-right: 120px;
+  border-top: 2px solid #efefef;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+h2.pt-subject__componentsWrapper {
+  line-height: 51px;
+  font-size: 36px;
+  font-weight: normal;
+  font-family: GraphikRegular;
+  margin-bottom: 60px;
+}
+.cp-text--22 {
+  line-height: 34px !important;
+  font-size: 22px !important;
+  font-weight: normal !important;
+}
+a.cp-imageAndText__linkWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  color: #ae2cfe;
+  margin-top: 40px;
+  text-decoration: none;
+}
+a.cp-imageAndText__linkWrapper:hover {
+  text-decoration: underline;
+  color: #ae2cfe;
+}
+cp-imageAndText__link {
+  color: #ae2cfe;
+}
+
+.cp-imageAndText__arrow {
+  margin-left: 10px;
 }

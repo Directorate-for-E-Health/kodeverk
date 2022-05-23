@@ -4,6 +4,7 @@ import "../index.css";
 import ICPCAutosuggestFat from "../components/ICPCAutosuggestFat";
 import Header from "../components/Header";
 import Tree from "react-animated-tree";
+import { kote } from "../config.ts";
 
 export const ICPCsearchFat = class ICPCsearchFat extends React.Component {
   constructor(props) {
@@ -82,6 +83,9 @@ export const ICPCsearchFat = class ICPCsearchFat extends React.Component {
                 </a>
                 &nbsp;
                 <i className="fa fa-external-link"> </i>
+              </p>
+              <p>
+                <a href={kote}>Rapporter feil eller endring</a>
               </p>
             </div>
           </div>

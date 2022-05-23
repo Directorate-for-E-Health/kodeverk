@@ -16,17 +16,17 @@ const semanticTagsFindings =
 const semanticTagsProcedures = "semanticTags=disorder&semanticTags=procedure";
 
 export let urlParameters: string =
-  "?limit=10&active=true&groupByConcept=true&" +
+  "?limit=5&active=true&groupByConcept=true&" +
   semanticTags +
   "&language=no&language=nb&language=nn&language=en&conceptActive=true";
 
 export let urlParametersFindings: string =
-  "?limit=10&active=true&groupByConcept=true&" +
+  "?limit=5&active=true&groupByConcept=true&" +
   semanticTagsFindings +
   "&language=no&language=nb&language=nn&language=en&conceptActive=true";
 
 export let urlParametersProcedures: string =
-  "?limit=10&active=true&groupByConcept=true&" +
+  "?limit=5&active=true&groupByConcept=true&" +
   semanticTagsProcedures +
   "&language=no&language=nb&language=nn&language=en&conceptActive=true";
 
@@ -124,7 +124,7 @@ const languages = "no,en";
 
 //Using external browser for best performance in prototype
 export const snomedCTBrowserURL =
-  "https://dailybuild.ihtsdotools.org/?perspective=full&edition=MAIN/SNOMEDCT-NO" +
+  "https://dailybuild.terminologi.ehelse.no/?perspective=full&edition=MAIN/SNOMEDCT-NO/REFSETS" +
   //  version +
   "&release=&languages=" +
   languages +
@@ -133,3 +133,5 @@ export const snomedCTBrowserURL =
 //Proxy url for FAT to avaid CORS issues
 
 export const fatProxyUrl = "https://fat.terminologi.ehelse.no";
+export const kote = "https://salmon-sea-06bfc2e03.1.azurestaticapps.net/";
+export const kute = "https://happy-mud-03a067d03.1.azurestaticapps.net/";
