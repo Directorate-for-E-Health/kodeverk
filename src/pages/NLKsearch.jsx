@@ -56,7 +56,7 @@ export const NLKsearch = class NLKsearch extends React.Component {
                     type="checkbox"
                     defaultChecked
                   />
-                  NKL
+                  NLK
                 </label>
                 <label>
                   <input
