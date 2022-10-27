@@ -45,7 +45,7 @@ export default class NKPKAutosuggestFat extends React.Component {
 
     let suggestions = [];
     let url =
-      "https://ehelse-kodeverk.ent.eastus2.azure.elastic-cloud.com/api/as/v1/engines/codesystems/search.json";
+      "https://fat-elastic.ent.northeurope.azure.elastic-cloud.com/api/as/v1/engines/ehelse-kodeverk/search.json";
     let body =
       '{"query": "' + query + '","filters" : {"code_system": [ "NKPK" ]}}';
     console.log("url:", url);
