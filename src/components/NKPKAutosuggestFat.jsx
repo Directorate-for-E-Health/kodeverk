@@ -54,7 +54,7 @@ export default class NKPKAutosuggestFat extends React.Component {
       fetch(url, {
         method: "POST",
         headers: {
-          Authorization: "Bearer search-h9rj1jveh7sna47pheugr5q6",
+          Authorization: "Bearer search-1ymcm9codb4x1ykp2vq44m7j",
           "Content-Type": "application/json",
         },
         body: body,
